@@ -1,2 +1,2 @@
 # CChat
-Add multiples chat formats per groups!
+Source code of CChat plugin, download in:
