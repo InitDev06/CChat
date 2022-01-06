@@ -1,0 +1,29 @@
+name: CChat
+main: org.alqj.coder.cchat.CChat
+version: 10.1
+api-version: 1.13
+author: iAlqjDV
+website: https://www.spigotmc.org/members/ialqjdv.1471925/
+softdepend: [PlaceholderAPI]
+depend: [Vault]
+permissions:
+  cchat.admin:
+    children:
+      cchat.cmd.*:
+        children:
+          - cchat.cmd.commands
+          - cchat.cmd.reload
+          - cchat.cmd.clear
+      cchat.bypass.*:
+        children:
+          - cchat.bypass.cooldown
+          - cchat.bypass.clear
+      cchat.*:
+        children:
+          - cchat.color
+commands:
+  cchat:
+    description: Main Command.
+  clearchat:
+    description: Clear the messages of the chat.
+    aliases: [cc]

@@ -1,0 +1,39 @@
+options:
+  config: 0.1
+  cooldown_time: 3
+  sounds:
+    reproduce: true
+    permission: ENTITY_ITEM_BREAK
+    reload: UI_BUTTON_CLICK
+    cooldown: BLOCK_NOTE_BLOCK_PLING
+    opened_menu: ENTITY_ENDER_DRAGON_FLAP
+    volume: 1.0
+    pitch: 1.0
+  messages:
+    prefix: "&eCChat &8»"
+    not_permission: "<prefix> &cYou don't have permission!"
+    not_console: "<prefix> &cThis command can't be executed in console!"
+    not_command: "<prefix> &cThis command is not been added to plugin!"
+    list_cmds: |-
+      &l
+      &e          CChat &610.1
+      &l
+      &8 - &a/cchat &7- &fMain Command.
+      &8 - &a/cchat [commands] &7- &fShow the commands.
+      &8 - &a/cchat [reload] &7- &fReload the plugin.
+      &l
+      &8 - &a/clearchat &7- &fClear the chat.
+      &l
+    reload: "<prefix> &7The plugin was reloaded in &a<ms>ms&7."
+    cooldown_activated: "<prefix> &cYou must be wait &6<time>s &cto send other message."
+    chat_cleared: "&cThe chat was cleared by &e<player>"
+    clear_bypass: "&aYou already view the messages of chat!"
+  chat:
+    default_format: "<player_prefix> &e<player> &7- &f<message>"
+    groups:
+      default:
+        format: "&7<player> &8- &7<message>"
+      vip:
+        format: "&b<level> &7| &a&lVIP &f<player> &8- &f<message>"
+      ceo:
+        format: "&9<world> &b<level> &7| &c&lADMIN &f<player> &8- &e<message>"
