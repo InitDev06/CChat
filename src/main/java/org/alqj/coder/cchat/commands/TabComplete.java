@@ -9,12 +9,11 @@ import java.util.List;
 
 public class TabComplete implements TabCompleter {
 
-
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String la, String[] args) {
         if(args.length >= 1){
             if(cmd.getName().equalsIgnoreCase("cchat")){
-                if(sender.hasPermission("cchat.cmd.list") && sender.hasPermission("cchat.cmd.reload")) return Arrays.asList("commands", "reload");
+                if(sender.hasPermission("cchat.cmd.commands") && sender.hasPermission("cchat.cmd.reload")) return Arrays.asList("commands", "reload");
             }
         }
         return null;

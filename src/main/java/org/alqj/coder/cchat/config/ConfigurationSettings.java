@@ -10,38 +10,32 @@ import java.io.IOException;
 public class ConfigurationSettings {
 
     private final CChat cc;
-    private double configVersion = 0.1;
-    private FileConfiguration configuration;
-    private File cfile;
 
-    public ConfigurationSettings(CChat cc){
+    private File file;
+    private FileConfiguration config;
+
+    public ConfigurationSettings(CChat cc) {
         this.cc = cc;
-        setup();
+        createFile();
+        config = loadFile();
     }
 
-
-    private void setup(){
-        if(!cc.getDataFolder().exists()) cc.getDataFolder().mkdir();
-        cfile = new File(cc.getDataFolder(), "config.yml");
-        if(!cfile.exists()){
-            new FileCopy().copy(cc.getResource("config.yml"), cfile);
-        }
-        configuration = new YamlConfiguration().loadConfiguration(cfile);
-        if(getConfiguration().getDouble("options.config") != configVersion){
-            cc.getLogger().severe("Your config file is outdated! Your version: " + getConfiguration().getDouble("options.config") + "required version: " + configVersion);
-            cc.getServer().getPluginManager().disablePlugin(cc);
-        }
+    private void createFile(){
+        file = new File("plugins/CChat", "config.yml");
+        if(!file.exists()) cc.saveResource("config.yml", false);
     }
 
-    public FileConfiguration getConfiguration(){ return configuration; }
+    private FileConfiguration loadFile(){ return YamlConfiguration.loadConfiguration(file); }
 
-    public void saveConfig(){
+    public void saveFile(){
         try{
-            configuration.save(cfile);
+            config.save(file);
         } catch(IOException ex){
-            ex.printStackTrace();;
+            ex.printStackTrace();
         }
     }
 
-    public void reloadConfig(){ configuration = YamlConfiguration.loadConfiguration(cfile); }
+    public void reload(){ config = YamlConfiguration.loadConfiguration(file); }
+
+    public FileConfiguration getFile(){ return config; }
 }

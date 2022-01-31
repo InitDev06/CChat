@@ -2,6 +2,7 @@ package org.alqj.coder.cchat.commands;
 
 import org.alqj.coder.cchat.CChat;
 import org.alqj.coder.cchat.color.Msg;
+import org.alqj.coder.cchat.config.ConfigurationSettings;
 import org.alqj.coder.cchat.xseries.XSound;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
@@ -9,14 +10,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-
-import java.text.NumberFormat;
 import java.util.Optional;
 
 public class MainCommand implements CommandExecutor {
 
     private final CChat cc;
-    private final FileConfiguration configuration;
     private Sound sound;
     private Sound sound1;
     private int volume;
@@ -24,9 +22,8 @@ public class MainCommand implements CommandExecutor {
 
     public MainCommand(CChat cc){
         this.cc = cc;
-        this.configuration = cc.cSettings.getConfiguration();
-        Optional<XSound> xs = XSound.matchXSound(configuration.getString("options.sounds.permission"));
-        Optional<XSound> xs1 = XSound.matchXSound(configuration.getString("options.sounds.reload"));
+        Optional<XSound> xs = XSound.matchXSound(cc.getConfigSettings().getFile().getString("options.sounds.permission"));
+        Optional<XSound> xs1 = XSound.matchXSound(cc.getConfigSettings().getFile().getString("options.sounds.reload"));
         if(xs.isPresent() || xs1.isPresent()){
             this.sound = xs.get().parseSound();
             this.sound1 = xs1.get().parseSound();
@@ -34,8 +31,8 @@ public class MainCommand implements CommandExecutor {
             this.sound = XSound.ENTITY_ITEM_BREAK.parseSound();
             this.sound1 = XSound.UI_BUTTON_CLICK.parseSound();
         }
-        this.volume = configuration.getInt("options.sounds.volume");
-        this.pitch = configuration.getInt("options.sounds.pitch");
+        this.volume = cc.getConfigSettings().getFile().getInt("options.sounds.volume");
+        this.pitch = cc.getConfigSettings().getFile().getInt("options.sounds.pitch");
     }
 
     private Sound getSound(){ return sound; }
@@ -48,6 +45,7 @@ public class MainCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String la, String[] args) {
+        FileConfiguration configuration = cc.getConfigSettings().getFile();
         String prefix = configuration.getString("options.messages.prefix");
         if(sender instanceof Player){
             Player player = (Player) sender;
@@ -77,6 +75,7 @@ public class MainCommand implements CommandExecutor {
             if(args[0].equalsIgnoreCase("reload")){
                 if(player.hasPermission("cchat.cmd.reload")){
                     long RELOAD = System.currentTimeMillis();
+                    cc.getConfigSettings().reload();
                     String message = configuration.getString("options.messages.reload");
                     message = message.replace("<prefix>", prefix);
                     message = message.replace("<ms>", (System.currentTimeMillis() - RELOAD) + "");
@@ -122,6 +121,7 @@ public class MainCommand implements CommandExecutor {
             if(args[0].equalsIgnoreCase("reload")){
                 if(sender.hasPermission("cchat.cmd.reload")){
                     long RELOAD = System.currentTimeMillis();
+                    cc.getConfigSettings().reload();
                     String message = configuration.getString("options.messages.reload");
                     message = message.replace("<prefix>", prefix);
                     message = message.replace("<ms>", (System.currentTimeMillis() - RELOAD) + "");

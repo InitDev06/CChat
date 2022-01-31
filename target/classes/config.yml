@@ -1,6 +1,31 @@
+# CChat 10.2 - Thanks for using my plugin.
+#
+# check_updates: Notify to admins if the plugin have a new update?
+# options.cooldown_time: Set the time of cooldown for the chat messages.
+# options.sounds - {
+#
+#    reproduce: Reproduce sounds to player?
+#    volume: Level of volume for the sounds.
+#    pitch: Level of pitch for the sounds.
+#
+# options.messages.prefix: This is the prefix of the messages.
+#
+# options.chat - {
+#
+#    default_format: Will be use this format if the player group is invalid, or doesn't was added in 'groups'.
+#    click - {
+#
+#       mode: Select the type of mode for the ClickEvent, COMMAND: this execute a command, SUGGEST: this suggest a command to player, URL: this open a url.
+#       actions - {
+#
+#          command: What command will be execute?
+#          suggest: What be suggest to player?
+#          url: What url will open?
+#
+#    hover.text: This text will appears when the player put the mouse over the message, use \n if you like create a new section.
 options:
-  config: 0.1
   cooldown_time: 3
+
   sounds:
     reproduce: true
     permission: ENTITY_ITEM_BREAK
@@ -9,6 +34,7 @@ options:
     opened_menu: ENTITY_ENDER_DRAGON_FLAP
     volume: 1.0
     pitch: 1.0
+
   messages:
     prefix: "&eCChat &8»"
     not_permission: "<prefix> &cYou don't have permission!"
@@ -16,7 +42,7 @@ options:
     not_command: "<prefix> &cThis command is not been added to plugin!"
     list_cmds: |-
       &l
-      &e          CChat &610.1
+      &e          CChat &610.2
       &l
       &8 - &a/cchat &7- &fMain Command.
       &8 - &a/cchat [commands] &7- &fShow the commands.
@@ -24,16 +50,27 @@ options:
       &l
       &8 - &a/clearchat &7- &fClear the chat.
       &l
+
     reload: "<prefix> &7The plugin was reloaded in &a<ms>ms&7."
     cooldown_activated: "<prefix> &cYou must be wait &6<time>s &cto send other message."
     chat_cleared: "&cThe chat was cleared by &e<player>"
     clear_bypass: "&aYou already view the messages of chat!"
+
   chat:
     default_format: "<player_prefix> &e<player> &7- &f<message>"
+    default_hover: "\n&l\n&aHello!\n&l"
+    click:
+      mode: SUGGEST
+      actions:
+        command: "/effect <player> minecraft:speed 1000000 1"
+        suggest: "/msg <player> "
+        url: "https://www.spigotmc.org/members/ialqjdv.1471925/"
     groups:
       default:
         format: "&7<player> &8- &7<message>"
+        hover: "&a<time>\n&l\n&7Player: &a<player>\n&l\n&eClick to send a message!"
       vip:
         format: "&b<level> &7| &a&lVIP &f<player> &8- &f<message>"
+        # hover: "&a<time>\n&l\n&7Player: &a<player>\n&l\n&eClick to send a message!"
       ceo:
         format: "&9<world> &b<level> &7| &c&lADMIN &f<player> &8- &e<message>"

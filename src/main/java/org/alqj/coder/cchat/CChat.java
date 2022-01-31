@@ -23,8 +23,8 @@ public class CChat extends JavaPlugin {
     private ListenerController lc;
     private VersionController vc;
     private Cooldown cooldown;
+    private ConfigurationSettings configurationSettings;
 
-    public ConfigurationSettings cSettings;
     public Chat chat = null;
     public Permission permission = null;
 
@@ -59,7 +59,7 @@ public class CChat extends JavaPlugin {
             Bukkit.getPluginManager().disablePlugin(this);
         }
 
-        cSettings = new ConfigurationSettings(this);
+        configurationSettings = new ConfigurationSettings(this);
         setupCommands();
         lc = new ListenerController(this);
         cooldown = new Cooldown(this);
@@ -83,6 +83,7 @@ public class CChat extends JavaPlugin {
     public Cooldown getCooldowns(){ return cooldown; }
 
     public ListenerController getListenerController(){ return lc; }
+    public ConfigurationSettings getConfigSettings() { return configurationSettings; }
 
     private void setupCommands(){
         getCommand("cchat").setExecutor(new MainCommand(this));

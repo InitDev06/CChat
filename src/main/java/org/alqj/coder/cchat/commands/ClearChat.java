@@ -2,6 +2,7 @@ package org.alqj.coder.cchat.commands;
 
 import org.alqj.coder.cchat.CChat;
 import org.alqj.coder.cchat.color.Msg;
+import org.alqj.coder.cchat.config.ConfigurationSettings;
 import org.alqj.coder.cchat.xseries.XSound;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -16,20 +17,18 @@ import java.util.Optional;
 public class ClearChat implements CommandExecutor {
 
     private final CChat cc;
-    private final FileConfiguration configuration;
     private Sound sound;
     private int volume;
     private int pitch;
 
     public ClearChat(CChat cc){
         this.cc = cc;
-        this.configuration = cc.cSettings.getConfiguration();
-        Optional<XSound> xs = XSound.matchXSound(configuration.getString("options.sounds.permission"));
+        Optional<XSound> xs = XSound.matchXSound(cc.getConfigSettings().getFile().getString("options.sounds.permission"));
         if(xs.isPresent()) this.sound = xs.get().parseSound();
         else this.sound = XSound.ENTITY_ITEM_BREAK.parseSound();
 
-        this.volume = configuration.getInt("options.sounds.volume");
-        this.pitch = configuration.getInt("options.sounds.pitch");
+        this.volume = cc.getConfigSettings().getFile().getInt("options.sounds.volume");
+        this.pitch = cc.getConfigSettings().getFile().getInt("options.sounds.pitch");
     }
 
     private Sound getSound(){ return sound; }
@@ -40,6 +39,7 @@ public class ClearChat implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String la, String[] args) {
+        FileConfiguration configuration = cc.getConfigSettings().getFile();
         String prefix = configuration.getString("options.messages.prefix");
         if(sender instanceof Player){
             Player player = (Player) sender;
